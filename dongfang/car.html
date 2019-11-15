@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+    <title></title>
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/car.css">
+    <link rel="stylesheet" href="./css/public.css">
+</head>
+
+<body>
+
+    <!-- 这里是页头--开始 -->
+    <header>
+        <div class="margin">
+            <a href="index.html"><img src="./img/8.png"></a>
+        </div>
+    </header>
+    <!-- 这里是页头--结束 -->
+
+    <!-- 这里是主体--开始 -->
+    <div class="w1200_container">
+
+        <section class="cartMain">
+            <div class="cartMain_hd">
+                <ul class="order_lists cartTop">
+                    <li class="list_check" style="padding-left:40px"><input type="checkbox" class="check-all check hinput">&nbsp;全选</li>
+                    <li class="list_chk" style="padding-left:40px">
+                        <!--所有商品全选-->
+                        <!-- <input type="checkbox" id="all" class="whole_check">  -->
+
+                        主图
+
+                    </li>
+                    <li class="list_con">商品信息</li>
+                    <li class="list_price">单价</li>
+                    <li class="list_amount">数量</li>
+                    <li class="list_sum">总价（元）</li>
+                    <li class="list_op">操作</li>
+                </ul>
+            </div>
+
+            <div class="cartBox">
+                <div class="order_content">
+                    <!-- 添加渲染    -->
+                </div>
+            </div>
+
+
+            <!--结算    底部-->
+            <div class="bar-wrapper">
+                <!-- <div><input type="checkbox">&nbsp;</div> -->
+                <div class="bar-right">
+
+                    <div class="totalMoney">共计:
+                        <strong class="total_text" style=" font-weight: 800;" id="priceTotal"> </strong>
+                    </div>
+                    <div class="jiesuan ">
+                        <a>结算</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 这里是主体--结束 -->
+
+    <!-- 这里是页脚-开始 -->
+    <footer>
+        <div class="margin ">
+            <div class="r-img ">
+                <a href="index.html "><img src="./img/7.png "></a>
+                <p><a href="# ">Copyright © 2012–2019 上海东福网络科技有限公司. All Rights Reserved 沪ICP备16001915号</a></p>
+            </div>
+            <div class="l-guide ">
+                <ul>
+                    <li class="li-m ">购物指南</li>
+                    <li><a href="# ">福利兑换指南</a></li>
+                    <li><a href="# ">支付方式</a></li>
+                    <li><a href="# ">购买指南</a></li>
+                    <li><a href="# ">配送说明</a></li>
+                </ul>
+                <ul>
+                    <li class="li-m ">售后服务</li>
+                    <li><a href="# ">退货政策</a></li>
+                    <li><a href="# ">常见问题</a></li>
+                </ul>
+                <ul>
+                    <li class="li-m ">东福产品</li>
+                    <li><a href="# ">东福超级卡</a></li>
+                    <li><a href="# ">东福生日汇</a></li>
+                    <li><a href="# ">东福乐影卡</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- 这里是页脚-结束 -->
+
+</body>
+<script src="./js/ajaxgnp.js "></script>
+<script src="./js/cookie.js "></script>
+<script>
+    // ;
+    // (function() {
+
+    //复选框
+    //     var carTable = document.getElementById('cartTable');
+    //     var tr = carTable.children[1].rows;
+    //     var checkInputs = document.getElementsByClassName('check');
+    //     var checkAllInputs = document.getElementsByClassName('check-all');
+    //     var priceTotal = document.getElementById('priceTotal');
+    //     
+    //     for (var i = 0, len = checkInputs.length; i < len; i++) {
+    //         checkInputs[i].onclick = function() {
+    //             if (this.className == 'check-all check') {
+    //                 for (var j = 0; j < checkInputs.length; j++) {
+    //                     checkInputs[j].checked = this.checked;
+    //                 }
+    //             } else if (this.checked == false) {
+    //                 for (var k = 0; k < checkAllInputs.length; k++) {
+    //                     checkAllInputs[k].checked = false;
+    //                 }
+    //             } else if (this.checked == true) {
+    //                 for (var l = 0; l < checkone.length; l++) {
+    //                     if (checkone[l].checked == false) {
+    //                         return;
+    //                     }
+    //                     if (l == checkone.length - 1) {
+    //                         for (var k = 0; k < checkAllInputs.length; k++) {
+    //                             checkAllInputs[k].checked = true;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // })();
+
+
+    ;
+    (function() {
+
+        class Car {
+            constructor() {
+                this.url = "http://localhost/dongfang/js/goods.json "
+
+                this.tbody = document.querySelector(".order_content");
+                this.allprice = document.querySelector(".bar-right");
+                // console.log(this.tbody);
+
+                this.hinput = document.querySelector(".hinput");
+                // console.log(this.tinput, this.hinput);
+
+
+                this.load();
+
+
+            }
+
+            checkAll() {
+                var flag = 0;
+                var that = this;
+                // console.log(this);
+                // console.log(this.tinput.length);
+
+                if (this.tinput.length > 0) {
+                    for (var i = 0; i < this.tinput.length; i++) {
+                        this.tinput[i].onclick = function() {
+
+                            for (var j = 0; j < that.tinput.length; j++) {
+                                if (!that.tinput[j].checked) {
+                                    flag = 1;
+                                }
+                            }
+                            if (flag == 0) {
+                                that.hinput.checked = "checkbox";
+                            } else {
+                                that.hinput.checked = "";
+                                flag = 0;
+                            }
+                            that.addPrice();
+                        }
+
+                    }
+                    this.hinput.onclick = function() {
+                        if (!that.hinput.checked) {
+                            that.hinput.checked = "";
+                            for (var j = 0; j < that.tinput.length; j++) {
+                                that.tinput[j].checked = "";
+                            }
+                        } else {
+                            that.hinput.checked = "checkbox";
+                            for (var j = 0; j < that.tinput.length; j++) {
+                                that.tinput[j].checked = "checkbox";
+                            }
+                        }
+                        that.addPrice();
+                    }
+                }
+            }
+
+            addPrice() {
+                var ckPrice = 0;
+                var chNum = 0;
+                var p = 0;
+                var n = 0;
+                // this.tinput = document.querySelectorAll(".tinput");
+                console.log(this.tinput);
+                for (var i = 0; i < this.tinput.length; i++) {
+                    if (this.tinput[i].checked) {
+                        var p = this.tinput[i].parentNode.nextElementSibling.nextElementSibling.children[0].innerHTML.slice(1)
+                        var n = this.tinput[i].parentNode.nextElementSibling.nextElementSibling.nextElementSibling.children[0].children[0].value
+                        console.log(p, n);
+                        ckPrice = ckPrice + p * n;
+                        chNum = chNum + n * 1;
+                    }
+                }
+                var ospan = document.querySelector(".total_text")
+                ospan.innerHTML = `${ckPrice.toFixed(2)}`;
+
+            }
+
+
+            load() {
+                var that = this;
+                ajax({
+                    url: this.url,
+                    success: function(res) {
+                        that.res = JSON.parse(res);
+                        // console.log(that.res)
+                        that.setLocal();
+                    },
+                    async: false
+                });
+            }
+            setLocal() {
+                this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
+
+                this.display();
+                this.numchange = document.querySelector(".num");
+
+                this.tinput = document.querySelectorAll(".tinput");
+                this.setList();
+                this.checkAll();
+            }
+            display() {
+                var str = " ";
+                var str2 = " ";
+                //   <input type="checkbox " id="checkbox_2 " class="son_check ">
+                //   <label for="checkbox_2 "></label>
+                for (var i = 0; i < this.res.length; i++) {
+                    for (var j = 0; j < this.goods.length; j++) {
+                        // console.log(this.res[i])
+
+                        if (this.res[i].goodsId == this.goods[j].id) {
+
+                            str += `
+                                  <ul class="order_lists" abc ="${this.res[i].goodsId}">
+                                        <li class="list_check" style="padding-left:40px"><input type="checkbox" class="check tinput" style="margin-top:50px"></li>
+                                     
+                                      <li class="list_con" style="padding-left:120px">
+
+                                          <div class="list_img">
+                                              <a ><img src="${this.res[i].url}"></a>
+                                          </div>
+                                          <div class="list_text">
+                                              <a >${this.res[i].name}</a>
+                                          </div>
+
+                                      </li>
+
+                                      <li class="list_price">
+                                          <p class="price">￥${this.res[i].price}</p>
+                                      </li>
+                                      <li class="list_amount">
+                                          <div class="amount_box">
+
+                                              <input type="number" value=${this.goods[j].num} min="1" class="num">
+
+                                          </div>
+                                      </li>
+                                      <li class="list_sum">
+                                          <p class="sum_price">￥  ${this.goods[j].num*this.res[i].price}</p>
+                                      </li>
+                                      <li class="list_op">
+                                          <p class="del">
+                                              <a class="delete">删除</a>
+                                          </p>
+                                      </li>
+                                  </ul>
+                               `
+                        }
+                    }
+                }
+
+
+                this.tbody.innerHTML = str;
+
+
+                // console.log(this.tinput);
+
+            }
+
+
+            setList() {
+                this.total = document.querySelector(".total_text");
+                // console.log(this.total)
+
+                this.sumAll = document.querySelectorAll(".sum_price");
+                // console.log(this.sumAll);
+
+                // console.log(this.numchange);
+
+                var that = this;
+                // console.log(that);
+
+                //总价
+                let arr = [];
+                this.sumu = 0;
+
+                for (var i = 0; i < this.sumAll.length; i++) {
+                    // console.log(this.sumAll[i].innerHTML);
+                    this.c = this.sumAll[i].innerHTML
+                        // console.log(this.c);
+
+                    this.suma = parseFloat(this.c.slice(1, this.c.length))
+
+                    // console.log(this.suma)
+                    arr.push(this.suma);
+                    this.sumu += arr[i];
+                }
+
+                this.total.innerHTML = this.sumu;
+
+                this.tbody.addEventListener("click", function(eve) {
+                    var e = eve || window.event;
+                    var target = e.target || e.srcElement;
+                    if (target.className == "delete") {
+                        that.id = target.parentNode.parentNode.parentNode.getAttribute("abc");
+                        //   console.log(target.parentNode.parentNode.parentNode)
+                        target.parentNode.parentNode.parentNode.remove();
+                        location.reload();
+                        that.set((i) => {
+                            //删除索引为i的 那个 数组元素
+                            that.goods.splice(i, 1);
+                        });
+                    }
+                });
+                this.tbody.addEventListener("input", function(eve) {
+                    var e = eve || window.event;
+                    var target = e.target || e.srcElement;
+
+                    // console.log(target.className)
+                    if (target.className == "num") {
+                        location.reload();
+
+                        // console.log(1)
+
+                        let arr = []; //总价
+                        that.sumu = 0;
+
+                        for (var i = 0; i < that.sumAll.length; i++) {
+                            // console.log(this.sumAll[i].innerHTML);
+
+
+                            that.c = that.sumAll[i].innerHTML
+                                // console.log(that.c);
+
+                            that.suma = parseFloat(that.c.slice(1, that.c.length))
+                                // console.log(that.suma);
+
+                            arr.push(that.suma);
+                            that.sumu += arr[i];
+                        }
+
+                        that.total.innerHTML = that.sumu;
+                        // console.log(that.sumu)
+                        that.totalAll = target.parentNode.parentNode.parentNode.parentNode.parentNode.nextElementSibling.firstElementChild.firstElementChild.firstElementChild
+                        that.totalAll.innerHTML = that.sumu
+
+                        that.sum = target.parentNode.parentNode.nextElementSibling.firstElementChild
+
+                        that.bprice = target.parentNode.parentNode.previousElementSibling.firstElementChild.innerHTML
+                        that.eprice = that.bprice.slice(1, that.bprice.length)
+
+                        that.val = target.value;
+                        that.id = target.parentNode.parentNode.parentNode.getAttribute("abc");
+
+                        that.set(function(i) {
+
+                            //   console.log( parseInt (that.goods[i].num)+1 )
+                            that.goods[i].num = that.val;
+
+                            //拿到当前点击的兄弟价格元素，然后把乘好的价格 添加到页面上
+                            for (var j = 0; j < that.goods.length; j++) {
+                                that.sum.innerHTML = (parseInt(that.goods[i].num)) * (parseInt(that.eprice));
+                                // that.sum.innerHTML =  (parseInt (that.goods[i].num)) * that.res[i].price
+
+                            }
+
+                        })
+                    }
+
+                })
+
+            }
+            set(fn) {
+
+                for (var i = 0; i < this.goods.length; i++) {
+                    if (this.goods[i].id == this.id) {
+                        //获取到对应的i 然后把这个i返回给前面的回调函数    splice那个
+                        fn(i);
+                    }
+                }
+
+                localStorage.setItem("goods", JSON.stringify(this.goods))
+            }
+
+
+
+
+        }
+
+        new Car();
+
+
+    })();
+</script>
+
+</html>
